@@ -73,6 +73,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   ms.begin(9600);
+  
   readCharacteristicValues();
   readSetting();
   lcd.begin();
@@ -345,16 +346,19 @@ void setting2_display() {
 }
 void ec_cal_display() {
   lcd.setCursor(0, 0); lcd.print("EC CALIBRATION");
-  lcd.setCursor(0, 1); lcd.print("EC : " + String(raw_ec));
+  lcd.setCursor(0, 1); lcd.print("raw EC : " + String(ec_meter));
   lcd.setCursor(0, 2); lcd.print("Cal : 12.88");
   if (isSet()) {
     delay(300);
     lcd.clear();
     if (Calibration(raw_ec)) {
       lcd.setCursor(5, 2); lcd.print("Successful");
+      display_state = MAIN;
+
     }
     else {
       lcd.setCursor(5, 2); lcd.print("Fail");
+
     }
     delay(1000);
   }
